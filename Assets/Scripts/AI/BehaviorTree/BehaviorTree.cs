@@ -32,6 +32,40 @@ public class BehaviorTree
 
 
     /// <summary>
+    /// Get the EnemyController value of the blackboard. 
+    /// Returns null with a warning if it can't fetch the EnemyController value
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    protected EnemyController GetBBEnemy(string key)
+    {
+        if (blackboard == null)
+        {
+            Debug.LogWarning($"" +
+                $"Blackboard for {agent.gameObject.name} " +
+                $"of type {agent.monster} is null.");
+            return null;
+        }
+        if (!blackboard.ContainsKey(key))
+        {
+            Debug.LogWarning($"" +
+                $"Missing key '{key}' in blackboard for {agent.gameObject.name} " +
+                $"of type {agent.monster}.");
+            return null;
+        }
+        if (!(blackboard[key] is string))
+        {
+            Debug.LogWarning($"" +
+                $"Value for '{key}' in blackboard for {agent.gameObject.name} " +
+                $"of type {agent.monster} is not an EnemyController.");
+            return null;
+        }
+
+        return (EnemyController)blackboard[key];
+    }
+
+
+    /// <summary>
     /// Get the string value of the blackboard. 
     /// Returns null with a warning if it can't fetch the string value
     /// </summary>
@@ -130,6 +164,25 @@ public class BehaviorTree
         }
 
         return (float)blackboard[key];
+    }
+
+
+    /// <summary>
+    /// Adds a EnemyController entry to the blackboard
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    protected void SetBBEnemy(string key, EnemyController value)
+    {
+        if (blackboard == null)
+        {
+            Debug.LogWarning($"" +
+                $"Blackboard for {agent.gameObject.name} " +
+                $"of type {agent.monster} is null.");
+            return;
+        }
+
+        blackboard[key] = value;
     }
 
 
