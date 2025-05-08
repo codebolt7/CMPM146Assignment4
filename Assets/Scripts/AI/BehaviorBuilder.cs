@@ -1,10 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;   // need to add this to other scripts to use Dictionary
 
 public class BehaviorBuilder
 {
     public static BehaviorTree MakeTree(EnemyController agent)
     {
         BehaviorTree result = null;
+        Dictionary<string, object> blackboard = new Dictionary<string, object>();
+
         if (agent.monster == "warlock")
         {
             result = new Sequence(new BehaviorTree[] {
@@ -34,6 +37,7 @@ public class BehaviorBuilder
         foreach (var n in result.AllNodes())
         {
             n.SetAgent(agent);
+            n.AddBlackboard(blackboard);
         }
         return result;
     }
