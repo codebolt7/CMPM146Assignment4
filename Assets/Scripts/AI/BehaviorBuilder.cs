@@ -71,6 +71,7 @@ public class BehaviorBuilder
                 new Sequence(new BehaviorTree[]
                 {
                     new LowHPQuery(25),
+                    new NotNode(new WithinProximityToPlayer(agent.GetAction("attack").range)),
                     new GoTowards(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f, 1f)
 
                 }),
@@ -112,6 +113,7 @@ public class BehaviorBuilder
                 new Sequence(new BehaviorTree[]
                 {
                     new LowHPQuery(25),
+                    new NotNode(new WithinProximityToPlayer(agent.GetAction("attack").range)),
                     new GoTowards(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2f, 1f)
 
                 }),
