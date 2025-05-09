@@ -12,7 +12,7 @@ public class HealIdeal : BehaviorTree
         if (act == null) return Result.FAILURE;
 
         bool success = act.Do(target.transform);
-        Debug.Log($"[{agent.name}] HealIdeal: Heal {(success ? "succeeded" : "failed")} on target {target.name}.");
+        Debug.Log($"[{agent.monster}] HealIdeal: Heal {(success ? "succeeded" : "failed")} on target {target.monster}.");
         return (success ? Result.SUCCESS : Result.FAILURE);
 
     }

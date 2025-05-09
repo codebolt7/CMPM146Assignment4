@@ -21,14 +21,14 @@ public class BehaviorBuilder
                 // perma buff strongest nearby enemy if available
                 new Sequence(new BehaviorTree[] {
                     new AbilityReadyQuery("permabuff"),
-                    new StrengthFactorQuery(2.0f),
+                    new StrengthFactorQuery(1.5f),
                     new PermaBuff()
                 }),
 
                 // temp buff a decent target
                 new Sequence(new BehaviorTree[] {
                     new AbilityReadyQuery("buff"),
-                    new StrengthFactorQuery(1.5f),
+                    new StrengthFactorQuery(1.0f),
                     new Buff()
                 }),
 
@@ -57,7 +57,7 @@ public class BehaviorBuilder
                  new Sequence(new BehaviorTree[] {
                      new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f),
                      new NearbyEnemiesQuery(2, 15f, "skeleton" ),
-                     new NearbyEnemiesQuery(5, 15f, "zombie"),                // wait for more zombies
+                     new NearbyEnemiesQuery(5, 15f, "zombie"),                // wait for more zombies 
                      new MoveToPlayer(agent.GetAction("attack").range),
                      new Attack(),
                  })

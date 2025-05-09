@@ -11,7 +11,7 @@ public class NearbyEnemiesQuery : BehaviorTree
     public override Result Run()
     {
         var nearby = GameManager.Instance.GetEnemiesInRange(agent.transform.position, distance);
-        Debug.Log($"[{agent.name}] NearbyEnemiesQuery: Found {nearby.Count} enemies within {distance} units.");
+        Debug.Log($"[{agent.monster}] NearbyEnemiesQuery: Found {nearby.Count} enemies within {distance} units.");
 
         if (nearby.Count >= count)
         {
@@ -28,11 +28,12 @@ public class NearbyEnemiesQuery : BehaviorTree
                 if (enemy.GetComponent<EnemyController>().monster == requiredType)
                 {
                     typeCount++;
+                    SetBBEnemy("FollowTarget", enemy.GetComponent<EnemyController>()); // not ideal but i wanna see if it works at all
 
                 }
             }
 
-            Debug.Log($"[{agent.name}] NearbyEnemiesQuery: Found {typeCount} nearby enemies of type '{requiredType}' (needed: {count}).");
+            // Debug.Log($"[{agent.monster}] NearbyEnemiesQuery: Found {typeCount} nearby enemies of type '{requiredType}' (needed: {count}).");
 
             if (typeCount >= count)
             {

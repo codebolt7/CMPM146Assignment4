@@ -39,7 +39,7 @@ public class FindIdealHealee : BehaviorTree
 
         if (target != null)
         {
-            Debug.Log($"[{agent.name}] Found ideal healee: {target.name} ({(lowestHealthPercentage * 100f):F1}%)");
+            Debug.Log($"[{agent.monster}] Found ideal healee: {target.monster} ({(lowestHealthPercentage * 100f):F1}%)");
             SetBBEnemy("IdealHealee", target);
         }
 
@@ -56,6 +56,7 @@ public class FindIdealHealee : BehaviorTree
     public FindIdealHealee(float range, float threshold = 10f) : base()
     {
         this.range = range;
+        this.threshold = threshold;
     }
 
     public override BehaviorTree Copy()

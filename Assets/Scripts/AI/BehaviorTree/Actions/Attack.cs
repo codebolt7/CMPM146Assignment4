@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Attack : BehaviorTree
 {
@@ -9,6 +10,7 @@ public class Attack : BehaviorTree
         if (act == null) return Result.FAILURE;
 
         bool success = act.Do(GameManager.Instance.player.transform);
+        Debug.Log($"[{agent.monster}] Attack: Attack {(success ? "succeeded" : "failed")}.");
         return (success ? Result.SUCCESS : Result.FAILURE);
     }
 
