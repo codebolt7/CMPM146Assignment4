@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 //add debug
@@ -8,6 +9,7 @@ public class GoTowards : BehaviorTree
     float distance;
     bool in_progress;
     Vector3 start_point;
+    Vector3 offset;
 
     public override Result Run()
     {
@@ -16,7 +18,7 @@ public class GoTowards : BehaviorTree
             in_progress = true;
             start_point = agent.transform.position;
         }
-        Vector3 direction = target.position - agent.transform.position;
+        Vector3 direction = (target.position + offset) - agent.transform.position;
         if ((direction.magnitude < arrived_distance) || (agent.transform.position - start_point).magnitude >= distance)
         {
             agent.GetComponent<Unit>().movement = new Vector2(0, 0);
@@ -36,6 +38,7 @@ public class GoTowards : BehaviorTree
         this.arrived_distance = arrived_distance;
         this.distance = distance;
         this.in_progress = false;
+        this.offset = new Vector3(Random.Range(-0.75f, 0.75f), 0, Random.Range(-0.75f, 0.75f));
     }
 
     public override BehaviorTree Copy()

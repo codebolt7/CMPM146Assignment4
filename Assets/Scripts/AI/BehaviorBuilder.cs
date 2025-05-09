@@ -33,7 +33,8 @@ public class BehaviorBuilder
                 }),
 
                 new Sequence(new BehaviorTree[] {
-                    new FindTypeFollowTarget("skeleton",5f)
+                    new FindTypeFollowTarget("skeleton",5f),
+                    new FollowEnemy(5f),
                 }),
 
                 // if too far from any target initially, head to a safe location
@@ -53,17 +54,21 @@ public class BehaviorBuilder
                 new Sequence(new BehaviorTree[]
                 {
                     new LowHPQuery(25),
-                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f)
+                    new GoTowards(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f, 1f)
 
                 }),
-                // else prep for attack
+                // prep for attack
                  new Sequence(new BehaviorTree[] {
-                     new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f),
-                     new NearbyEnemiesQuery(2, 15f, "skeleton" ),
-                     new NearbyEnemiesQuery(5, 15f, "zombie"),                // wait for more zombies 
+                     new NearbyEnemiesQuery(1, 6f, "skeleton"),
+                     new NearbyEnemiesQuery(3, 6f, "zombie"),
                      new MoveToPlayer(agent.GetAction("attack").range),
                      new Attack(),
-                 })
+                 }),
+
+                 // if too far from any target initially, head to a safe location
+                new Sequence(new BehaviorTree[] {
+                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f),
+                })
 
             });
         }
@@ -75,15 +80,20 @@ public class BehaviorBuilder
                 new Sequence(new BehaviorTree[]
                 {
                     new LowHPQuery(25),
-                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2f)
+                    new GoTowards(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2f, 1f)
 
                 }),
-                // else prep for attack
+                // prep for attack
                  new Sequence(new BehaviorTree[] {
-                     new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2f),
-                     new FindTypeFollowTarget("zombie", 3f),
+                     new FindTypeFollowTarget("zombie", 6f),
+                     new FollowEnemy(2f),
                      new Attack(),
-                 })
+                 }),
+                 // if too far from any target initially, head to a safe location
+                new Sequence(new BehaviorTree[] {
+                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f),
+                })
+
 
             });
         }

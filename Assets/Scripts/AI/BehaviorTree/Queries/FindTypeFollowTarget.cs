@@ -23,12 +23,15 @@ public class FindTypeFollowTarget : BehaviorTree
             {
                 bestTarget = enemy;
                 closestDistance = dist;
-                // Debug.Log($"[{agent.monster}] FindTypeFollowTarget: Successfully following a target.");
-                return Result.SUCCESS;
             }
         }
-        
-        SetBBEnemy("FollowTarget", bestTarget);
+
+        if (bestTarget != null)
+        {
+            SetBBEnemy("FollowTarget", bestTarget);
+            // Debug.Log($"[{agent.monster}] FindTypeFollowTarget: Successfully following a target.");
+            return Result.SUCCESS;
+        }
 
         return Result.FAILURE;
     }
