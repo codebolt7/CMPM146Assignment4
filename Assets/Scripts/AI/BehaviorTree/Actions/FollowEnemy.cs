@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-// kinda have no idea what i was doing here but trying to make 
+
 public class FollowEnemy : BehaviorTree
 {
     private float followDist;
-    private bool in_progress = false;
 
     public FollowEnemy(float followDist) : base()
     {
@@ -14,7 +13,24 @@ public class FollowEnemy : BehaviorTree
 
     public override Result Run()
     {
-        // essentially was trying to implement an action that accesses a "FollowTarget" from the blackboard and has the enemy follow that enemy -> use for skeletons and warlocks ? 
+        // implements an action that accesses a "FollowTarget" from the blackboard and has the enemy follow that enemy
+        // used for skeletons and warlocks
+
+        var target = GetBBEnemy("FollowTarget");
+
+        if (target == null) return Result.FAILURE;
+
+        Vector3 direction = target.transform.position - agent.transform.position;
+        if (direction.magnitude < followDist)
+        {
+            agent.GetComponent<Unit>().movement = new Vector2(0, 0);
+            return Result.SUCCESS;
+        }
+        else
+        {
+            agent.GetComponent<Unit>().movement = direction.normalized;
+            return Result.IN_PROGRESS;
+        }
     }
 
     public override BehaviorTree Copy()

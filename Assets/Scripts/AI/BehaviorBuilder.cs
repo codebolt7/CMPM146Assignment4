@@ -15,7 +15,7 @@ public class BehaviorBuilder
                 // heal ideal ally if ability ready and target found
                 new Sequence(new BehaviorTree[] {
                     new AbilityReadyQuery("heal"),
-                    new FindIdealHealee(5f, 15f),
+                    new FindIdealHealee(5f, 15),
                     new HealIdeal()
                 }),
                 // perma buff strongest nearby enemy if available

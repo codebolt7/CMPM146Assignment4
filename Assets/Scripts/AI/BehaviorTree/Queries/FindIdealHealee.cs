@@ -53,7 +53,7 @@ public class FindIdealHealee : BehaviorTree
     /// </summary>
     /// <param name="range">Range of the heal ability</param>
     /// <param name="threshold">Lowest amount of health missing to be viable</param>
-    public FindIdealHealee(float range, float threshold = 10f) : base()
+    public FindIdealHealee(float range, int threshold = 10) : base()
     {
         this.range = range;
         this.threshold = threshold;
