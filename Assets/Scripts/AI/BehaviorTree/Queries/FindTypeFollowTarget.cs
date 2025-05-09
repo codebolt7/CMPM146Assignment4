@@ -23,6 +23,7 @@ public class FindTypeFollowTarget : BehaviorTree
             {
                 bestTarget = enemy;
                 closestDistance = dist;
+                // Debug.Log($"[{agent.monster}] FindTypeFollowTarget: Successfully following a target.");
                 return Result.SUCCESS;
             }
         }

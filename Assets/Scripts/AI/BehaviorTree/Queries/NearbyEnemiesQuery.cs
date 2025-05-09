@@ -11,7 +11,7 @@ public class NearbyEnemiesQuery : BehaviorTree
     public override Result Run()
     {
         var nearby = GameManager.Instance.GetEnemiesInRange(agent.transform.position, distance);
-        Debug.Log($"[{agent.monster}] NearbyEnemiesQuery: Found {nearby.Count} enemies within {distance} units.");
+        // Debug.Log($"[{agent.monster}] NearbyEnemiesQuery: Found {nearby.Count} enemies within {distance} units.");
 
         if (nearby.Count >= count)
         {

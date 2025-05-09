@@ -32,8 +32,11 @@ public class BehaviorBuilder
                     new Buff()
                 }),
 
-                // otherwise stay back
-                // edit to make them follow skeletons at a distance? and change from a GoTo
+                new Sequence(new BehaviorTree[] {
+                    new FindTypeFollowTarget("skeleton",5f)
+                }),
+
+                // if too far from any target initially, head to a safe location
                 new Sequence(new BehaviorTree[] {
                     new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 1f),
                 })
@@ -78,9 +81,7 @@ public class BehaviorBuilder
                 // else prep for attack
                  new Sequence(new BehaviorTree[] {
                      new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2f),
-                     new NearbyEnemiesQuery(5, 15f, "zombie"),                // wait for zombies
-                     new NotNode(new NearbyEnemiesQuery(2, 15f, "zombie")),   // when zombies leave, follow -> not working as expected
-                     new MoveToPlayer(agent.GetAction("attack").range),
+                     new FindTypeFollowTarget("zombie", 3f),
                      new Attack(),
                  })
 
