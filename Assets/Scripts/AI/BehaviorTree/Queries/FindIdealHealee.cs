@@ -23,6 +23,9 @@ public class FindIdealHealee : BehaviorTree
             EnemyController enemy = t.GetComponent<EnemyController>();
             if (enemy == null) continue;
 
+            // ignore if warlock bc warlocks cannot be healed
+            if (enemy.monster == "warlock") continue; 
+
             // Ignore if missing HP amount is below threshold
             if (enemy.hp.max_hp - enemy.hp.hp < threshold) continue;
 
