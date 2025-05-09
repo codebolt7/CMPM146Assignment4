@@ -23,8 +23,8 @@ public class FindIdealHealee : BehaviorTree
             EnemyController enemy = t.GetComponent<EnemyController>();
             if (enemy == null) continue;
 
-            // ignore if warlock bc warlocks cannot be healed
-            if (enemy.monster == "warlock") continue; 
+            // ignore if warlock bc warlocks cannot be healed <- was causing errors?
+            //if (enemy.monster == "warlock") continue; 
 
             // Ignore if missing HP amount is below threshold
             if (enemy.hp.max_hp - enemy.hp.hp < threshold) continue;
@@ -39,6 +39,7 @@ public class FindIdealHealee : BehaviorTree
 
         if (target != null)
         {
+            Debug.Log($"[{agent.name}] Found ideal healee: {target.name} ({(lowestHealthPercentage * 100f):F1}%)");
             SetBBEnemy("IdealHealee", target);
         }
 

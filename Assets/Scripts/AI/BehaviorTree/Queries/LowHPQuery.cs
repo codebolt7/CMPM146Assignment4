@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 public class LowHPQuery : BehaviorTree
 {
     float threshold;

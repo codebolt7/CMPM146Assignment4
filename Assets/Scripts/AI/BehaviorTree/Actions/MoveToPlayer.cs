@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MoveToPlayer : BehaviorTree
 {
@@ -10,11 +11,13 @@ public class MoveToPlayer : BehaviorTree
         if (direction.magnitude < arrived_distance)
         {
             agent.GetComponent<Unit>().movement = new Vector2(0, 0);
+            Debug.Log($"[{agent.name}] MoveToPlayer: Arrived at player");
             return Result.SUCCESS;
         }
         else
         {
             agent.GetComponent<Unit>().movement = direction.normalized;
+            Debug.Log($"[{agent.name}] MoveToPlayer: Moving towards player");
             return Result.IN_PROGRESS;
         }
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Buff : BehaviorTree
 {
@@ -9,6 +10,7 @@ public class Buff : BehaviorTree
         if (act == null) return Result.FAILURE;
         
         bool success = act.Do(target.transform);
+        Debug.Log($"[{agent.name}] Buff: Buff {(success ? "succeeded" : "failed")} on target {target.name}.");
         return (success ? Result.SUCCESS : Result.FAILURE);
     }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//add debug
 public class GoTowards : BehaviorTree
 {
     Transform target;

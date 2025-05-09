@@ -10,14 +10,6 @@ public class BehaviorBuilder
 
         if (agent.monster == "warlock")
         {
-            /* result = new Sequence(new BehaviorTree[] {
-                                        new MoveToPlayer(agent.GetAction("attack").range),
-                                        new Attack(),
-                                        new PermaBuff(),
-                                        new Heal(),
-                                        new Buff()
-                                     });
-            */
             result = new Selector(new BehaviorTree[]
             {
                 // heal ideal ally if ability ready and target found
@@ -43,18 +35,13 @@ public class BehaviorBuilder
                 // otherwise stay back
                 // edit to make them follow skeletons at a distance? and change from a GoTo
                 new Sequence(new BehaviorTree[] {
-                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 3f),
+                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 1f),
                 })
 
             });
         }
         else if (agent.monster == "zombie")
         {
-            /* result = new Sequence(new BehaviorTree[] {
-                                       new MoveToPlayer(agent.GetAction("attack").range),
-                                       new Attack()
-                                     });
-            */
 
             // might swap out GoTo for GoTowards idk yet
             result = new Selector(new BehaviorTree[]
@@ -63,42 +50,38 @@ public class BehaviorBuilder
                 new Sequence(new BehaviorTree[]
                 {
                     new LowHPQuery(25),
-                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 3f)
+                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f)
 
                 }),
                 // else prep for attack
                  new Sequence(new BehaviorTree[] {
-                     new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 3f),
+                     new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2.5f),
+                     new NearbyEnemiesQuery(2, 15f, "skeleton" ),
                      new NearbyEnemiesQuery(5, 15f, "zombie"),                // wait for more zombies
                      new MoveToPlayer(agent.GetAction("attack").range),
-                     new Attack()
+                     new Attack(),
                  })
 
             });
         }
         else // skeletons
         {
-            /*result = new Sequence(new BehaviorTree[] {
-                                       new MoveToPlayer(agent.GetAction("attack").range),
-                                       new Attack()
-                                     });
-            */
             result = new Selector(new BehaviorTree[]
             {
                 // if low hp, retreat to get healed
                 new Sequence(new BehaviorTree[]
                 {
                     new LowHPQuery(25),
-                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 3f)
+                    new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2f)
 
                 }),
                 // else prep for attack
                  new Sequence(new BehaviorTree[] {
-                     new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 3f),
+                     new GoTo(AIWaypointManager.Instance.GetClosestByType(agent.transform.position, AIWaypoint.Type.SAFE).transform, 2f),
                      new NearbyEnemiesQuery(5, 15f, "zombie"),                // wait for zombies
-                     new NotNode(new NearbyEnemiesQuery(5, 15f, "zombie")),   // when zombies leave, follow -> might need to slow them further?
+                     new NotNode(new NearbyEnemiesQuery(2, 15f, "zombie")),   // when zombies leave, follow -> not working as expected
                      new MoveToPlayer(agent.GetAction("attack").range),
-                     new Attack()
+                     new Attack(),
                  })
 
             });

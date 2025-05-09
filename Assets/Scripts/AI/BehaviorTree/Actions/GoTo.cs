@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GoTo : BehaviorTree
 {
@@ -11,6 +12,7 @@ public class GoTo : BehaviorTree
         if (direction.magnitude < arrived_distance)
         {
             agent.GetComponent<Unit>().movement = new Vector2(0, 0);
+            Debug.Log($"[{agent.name}] GoTo: Arrived at location");
             return Result.SUCCESS;
         }
         else
