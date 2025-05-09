@@ -168,6 +168,36 @@ public class BehaviorTree
 
 
     /// <summary>
+    /// Get the boolean value from the blackboard. 
+    /// Returns false with a warning if it can't fetch the boolean value.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    protected bool GetBBBool(string key)
+    {
+        if (blackboard == null)
+        {
+            Debug.LogWarning($"Blackboard for {agent.gameObject.name} of type {agent.monster} is null.");
+            return false;
+        }
+
+        if (!blackboard.ContainsKey(key))
+        {
+            Debug.LogWarning($"Missing key '{key}' in blackboard for {agent.gameObject.name} of type {agent.monster}.");
+            return false;
+        }
+        if (!(blackboard[key] is bool))
+        {
+            Debug.LogWarning($"Value for '{key}' in blackboard for {agent.gameObject.name} of type {agent.monster} is not a boolean.");
+            return false;
+        }
+        
+        return (bool)blackboard[key];
+    }
+   
+
+
+    /// <summary>
     /// Adds a EnemyController entry to the blackboard
     /// </summary>
     /// <param name="key"></param>
@@ -237,6 +267,22 @@ public class BehaviorTree
             Debug.LogWarning($"" +
                 $"Blackboard for {agent.gameObject.name} " +
                 $"of type {agent.monster} is null.");
+            return;
+        }
+
+        blackboard[key] = value;
+    }
+
+    /// <summary>
+    /// Set the boolean value in the blackboard.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    public void SetBBBool(string key, bool value)
+    {
+        if (blackboard == null)
+        {
+            Debug.LogWarning($"Blackboard for {agent.gameObject.name} of type {agent.monster} is null.");
             return;
         }
 
