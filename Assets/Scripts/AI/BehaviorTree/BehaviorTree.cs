@@ -53,7 +53,7 @@ public class BehaviorTree
                 $"of type {agent.monster}.");
             return null;
         }
-        if (!(blackboard[key] is string))
+        if (!(blackboard[key] is EnemyController))
         {
             Debug.LogWarning($"" +
                 $"Value for '{key}' in blackboard for {agent.gameObject.name} " +
